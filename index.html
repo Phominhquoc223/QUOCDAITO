@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đồng Lúa Ban Chiều Việt Nam | Assignment CNTT 4.0 - Phó Minh Quốc Knul</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            sunset: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+            },
+            paddy: {
+              500: '#65a30d',
+              600: '#4d7c0f',
+              700: '#3f6212',
+              800: '#365314',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Nền đồng lúa chiều tà Việt Nam kết hợp hiệu ứng ánh hoàng hôn */
+    body {
+      background-color: #1c1208;
+      color: #fef3c7;
+      overflow-x: hidden;
+    }
+
+    .rice-field-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image: 
+        linear-gradient(to bottom, rgba(45, 22, 6, 0.55) 0%, rgba(120, 53, 15, 0.45) 45%, rgba(28, 18, 8, 0.92) 100%),
+        url('https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* Hiệu ứng mặt trời lặn ấm áp */
+    .sunset-glow {
+      position: fixed;
+      top: -10%;
+      right: 10%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(251, 191, 36, 0.35) 0%, rgba(245, 158, 11, 0.12) 45%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+      animation: pulseSun 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseSun {
+      0% { transform: scale(1); opacity: 0.85; }
+      100% { transform: scale(1.12); opacity: 1; }
+    }
+
+    /* Glassmorphism thẻ nội dung */
+    .glass-card {
+      background: rgba(34, 21, 10, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(251, 191, 36, 0.22);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .glass-card-light {
+      background: rgba(254, 243, 199, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(253, 230, 138, 0.2);
+    }
+
+    /* Thanh cuộn tinh tế */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1c1208;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b45309;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f59e0b;
+    }
+
+    /* Hiệu ứng sóng lúa nhẹ */
+    .tab-active {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #1c1208;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-amber-950">
+
+  <!-- Background Đồng Lúa Hoàng Hôn & Ánh Mặt Trời -->
+  <div class="rice-field-bg"></div>
+  <div class="sunset-glow"></div>
+
+  <!-- Hình bóng Bác Hồ trang trọng làm watermark nghệ thuật góc nền -->
+  <div class="fixed bottom-0 right-0 z-[-1] pointer-events-none opacity-20 hidden lg:block select-none">
+    <img 
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ho_Chi_Minh_1946.jpg/440px-Ho_Chi_Minh_1946.jpg" 
+      alt="Chủ tịch Hồ Chí Minh"
+      onerror="this.style.display='none'"
+      class="w-72 h-auto object-cover rounded-tl-3xl sepia contrast-125 mix-blend-luminosity mask-image"
+      style="-webkit-mask-image: linear-gradient(to top left, black 40%, transparent 95%); mask-image: linear-gradient(to top left, black 40%, transparent 95%);"
+    />
+  </div>
+
+  <!-- HEADER & THÔNG TIN SINH VIÊN -->
+  <header class="sticky top-0 z-40 glass-card border-b border-amber-400/25">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <!-- Logo & Tiêu đề -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-amber-950 shadow-lg shrink-0">
+            <i class="fa-solid fa-wheat-awn text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="font-serif text-lg sm:text-xl font-bold text-amber-300 tracking-wide">
+                Đồng Lúa Ban Chiều Việt Nam
+              </h1>
+              <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
+                FPT Polytechnic
+              </span>
+            </div>
+            <p class="text-xs text-amber-100/80">
+              Cổng Thực Hành Assignment CNTT 4.0 &amp; Không Gian Văn Hóa Quê Hương
+            </p>
+          </div>
+        </div>
+
+        <!-- Thẻ Thông Tin Sinh Viên Bắt Buộc -->
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3 bg-amber-950/70 border border-amber-400/30 px-3.5 py-2 rounded-2xl text-xs sm:text-sm">
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-user-graduate text-amber-400"></i>
+            <span class="text-amber-200/75">SV:</span>
+            <strong class="text-amber-100 font-semibold">Phó Minh Quốc Knul</strong>
+          </div>
+          <span class="text-amber-500/50 hidden sm:inline">|</span>
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-id-card text-amber-400"></i>
+            <span class="text-amber-200/75">MSSV:</span>
+            <strong class="text-amber-300 font-bold">PK04952</strong>
+          </div>
+          <span class="text-amber-500/50 hidden sm:inline">|</span>
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user text-amber-400"></i>
+            <span class="text-amber-200/75">Lớp:</span>
+            <strong class="text-emerald-300 font-bold">ITI102-WD22301</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- THANH ĐIỀU HƯỚNG CHÍNH (TABS TƯƠNG TÁC) -->
+      <nav class="mt-3 pt-2.5 border-t border-amber-400/15 flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1">
+        <button onclick="switchTab('home')" id="nav-home" class="tab-btn tab-active px-3.5 py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap transition-all flex items-center gap-2">
+          <i class="fa-solid fa-sun"></i> Đồng Lúa &amp; Bác Hồ
+        </button>
+        <button onclick="switchTab('part1')" id="nav-part1" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm text-amber-100/85 hover:bg-amber-400/15 whitespace-nowrap transition-all flex items-center gap-2">
+          <i class="fa-solid fa-book-open-reader text-amber-400"></i> Phần 1: Thư Viện Số (Y1-Y3)
+        </button>
+        <button onclick="switchTab('part2')" id="nav-part2" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm text-amber-100/85 hover:bg-amber-400/15 whitespace-nowrap transition-all flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Phần 2: Ghi Chú AI (Y4-Y6)
+        </button>
+        <button onclick="switchTab('submission')" id="nav-submission" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm text-amber-100/85 hover:bg-amber-400/15 whitespace-nowrap transition-all flex items-center gap-2">
+          <i class="fa-solid fa-file-zipper text-amber-400"></i> Đóng Gói &amp; Chấm Điểm
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- NỘI DUNG CHÍNH -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- ========================================================= -->
+    <!-- TAB 1: TRANG CHỦ - ĐỒNG LÚA BAN CHIỀU & CHÂN DUNG BÁC HỒ -->
+    <!-- ========================================================= -->
+    <section id="tab-home" class="tab-content fade-in space-y-6">
+      
+      <!-- Hero Banner kết hợp Chân dung Bác Hồ & Khung cảnh Đồng lúa chiều tà -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          <!-- Cột Trái: Lời giới thiệu & Câu nói của Bác -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-medium">
+              <i class="fa-solid fa-star text-yellow-400"></i>
+              <span>Bức tranh quê hương Việt Nam &amp; Công nghệ 4.0</span>
+            </div>
+
+            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-amber-200 leading-tight">
+              Hoàng Hôn Trên Cánh Đồng Lúa Chín &amp; Khát Vọng Tuổi Trẻ Việt Nam
+            </h2>
+
+            <p class="text-sm sm:text-base text-amber-100/90 leading-relaxed">
+              Khi ánh nắng chiều buông xuống nhuộm vàng những cánh đồng lúa bát ngát của làng quê Việt Nam, hương lúa chín hòa quyện cùng làn gió nhẹ tạo nên một khung cảnh thanh bình, ấm áp. Trong không gian thiêng liêng ấy, hình ảnh <strong class="text-amber-300">Chủ tịch Hồ Chí Minh</strong> kính yêu luôn là nguồn cảm hứng bất tận nhắc nhở thế hệ sinh viên FPT Polytechnic không ngừng học tập, làm chủ tri thức và công nghệ số.
+            </p>
+
+            <!-- Trích dẫn lời Bác -->
+            <blockquote class="p-4 rounded-2xl bg-amber-950/70 border-l-4 border-amber-400 italic text-amber-200 text-sm">
+              “Non sông Việt Nam có trở nên tươi đẹp hay không, dân tộc Việt Nam có bước tới đài vinh quang để sánh vai với các cường quốc năm châu được hay không, chính là nhờ một phần lớn ở công học tập của các em.”
+              <footer class="not-italic font-semibold text-amber-400 mt-1 text-xs">— Chủ tịch Hồ Chí Minh (Thư gửi học sinh nhân ngày khai trường, 9/1945)</footer>
+            </blockquote>
+
+            <!-- Các nút điều hướng nhanh & Tương tác UI -->
+            <div class="flex flex-wrap gap-3 pt-2">
+              <button onclick="switchTab('part1')" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-amber-950 font-bold text-sm shadow-lg transition-all flex items-center gap-2">
+                <i class="fa-solid fa-folder-open"></i> Khám phá Thư viện số (Phần 1)
+              </button>
+              <button onclick="switchTab('part2')" class="px-5 py-2.5 rounded-2xl bg-emerald-700/80 hover:bg-emerald-600 text-white font-semibold text-sm border border-emerald-400/30 shadow-lg transition-all flex items-center gap-2">
+                <i class="fa-solid fa-robot"></i> Mở Ứng dụng Ghi chú AI (Phần 2)
+              </button>
+              <button onclick="toggleSunsetAtmosphere()" id="btn-atmosphere" class="px-4 py-2.5 rounded-2xl glass-card-light hover:bg-amber-400/20 text-amber-200 text-sm font-medium transition-all flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i> Đổi sắc chiều hoàng hôn
+              </button>
+            </div>
+          </div>
+
+          <!-- Cột Phải: Khung hình Bác Hồ trang trọng & Thẻ Sinh Viên -->
+          <div class="lg:col-span-5 flex flex-col items-center">
+            <div class="relative group w-full max-w-sm">
+              <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-300 rounded-3xl blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
+              <div class="relative glass-card rounded-3xl p-4 text-center space-y-3">
+                <div class="relative rounded-2xl overflow-hidden border-2 border-amber-400/50 shadow-xl aspect-[4/3] bg-amber-950">
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ho_Chi_Minh_1946.jpg/640px-Ho_Chi_Minh_1946.jpg" 
+                    alt="Chân dung Chủ tịch Hồ Chí Minh"
+                    onerror="this.onerror=null; this.src='https://placehold.co/600x450/78350f/fef3c7?text=Chu+Tich+Ho+Chi+Minh';"
+                    class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-amber-950/90 via-transparent to-transparent"></div>
+                  <div class="absolute bottom-3 left-3 right-3 text-left">
+                    <span class="px-2 py-0.5 rounded bg-red-700/90 text-amber-200 text-[10px] font-bold uppercase tracking-wider">Kính yêu Bác Hồ</span>
+                    <p class="font-serif text-base font-bold text-amber-200 mt-0.5">Chủ Tịch Hồ Chí Minh (1890 - 1969)</p>
+                  </div>
+                </div>
+
+                <!-- Bảng thông tin sinh viên chi tiết -->
+                <div class="bg-amber-950/80 rounded-2xl p-3.5 border border-amber-400/25 text-left space-y-1.5 text-xs sm:text-sm">
+                  <div class="flex justify-between items-center border-b border-amber-400/15 pb-1">
+                    <span class="text-amber-200/70">Họ và tên sinh viên:</span>
+                    <span class="font-bold text-amber-300">Phó Minh Quốc Knul</span>
+                  </div>
+                  <div class="flex justify-between items-center border-b border-amber-400/15 pb-1">
+                    <span class="text-amber-200/70">Mã số sinh viên:</span>
+                    <span class="font-bold text-amber-200">PK04952</span>
+                  </div>
+                  <div class="flex justify-between items-center border-b border-amber-400/15 pb-1">
+                    <span class="text-amber-200/70">Lớp học phần:</span>
+                    <span class="font-bold text-emerald-300">ITI102-WD22301</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-amber-200/70">Bài tập thực hành:</span>
+                    <span class="font-semibold text-orange-300">Assignment CNTT 4.0 (60%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Thư Viện Hình Ảnh Mẫu Đồng Lúa Việt Nam & Liên Kết Hữu Ích Hoạt Động Thật -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- 3 Hình ảnh mẫu Đồng Lúa Ban Chiều (Nhấn để phóng to xem chi tiết) -->
+        <div class="lg:col-span-2 glass-card rounded-3xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-serif text-xl font-bold text-amber-300 flex items-center gap-2">
+              <i class="fa-solid fa-images text-amber-400"></i> Hình Ảnh Mẫu Đồng Lúa Chiều Tà Việt Nam
+            </h3>
+            <span class="text-xs text-amber-200/70">Nhấn vào ảnh để xem chi tiết</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Ảnh 1 -->
+            <div onclick="openImageModal('Hoàng hôn trên cánh đồng lúa chín', 'Ánh nắng chiều vàng rực trải dài trên những thửa ruộng bậc thang và đồng bằng Việt Nam, báo hiệu mùa gặt bội thu.', 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1000&q=80')" class="group cursor-pointer rounded-2xl overflow-hidden border border-amber-400/25 bg-amber-950/60 flex flex-col">
+              <div class="aspect-video overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600&q=80" alt="Đồng lúa hoàng hôn" onerror="this.src='https://placehold.co/600x400/92400e/fef3c7?text=Dong+Lua+Hoang+Hon'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <span class="absolute bottom-2 right-2 bg-black/60 text-amber-200 text-[10px] px-2 py-0.5 rounded-full"><i class="fa-solid fa-expand"></i> Xem</span>
+              </div>
+              <div class="p-3">
+                <h4 class="font-semibold text-sm text-amber-200 group-hover:text-amber-400 transition">Nắng Chiều Đồng Bằng</h4>
+                <p class="text-xs text-amber-100/70 mt-1 line-clamp-2">Sắc vàng óng ả của lúa chín hòa quyện cùng bầu trời hoàng hôn.</p>
+              </div>
+            </div>
+
+            <!-- Ảnh 2 -->
+            <div onclick="openImageModal('Ruộng bậc thang mùa lúa chín Tây Bắc', 'Vẻ đẹp kỳ vĩ của những nấc thang vàng vươn tới chân trời trong buổi chiều tà miền núi phía Bắc.', 'https://images.unsplash.com/photo-1504214208698-ea1916a2195a?auto=format&fit=crop&w=1000&q=80')" class="group cursor-pointer rounded-2xl overflow-hidden border border-amber-400/25 bg-amber-950/60 flex flex-col">
+              <div class="aspect-video overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?auto=format&fit=crop&w=600&q=80" alt="Ruộng bậc thang" onerror="this.src='https://placehold.co/600x400/4d7c0f/fef3c7?text=Ruong+Bac+Thang'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <span class="absolute bottom-2 right-2 bg-black/60 text-amber-200 text-[10px] px-2 py-0.5 rounded-full"><i class="fa-solid fa-expand"></i> Xem</span>
+              </div>
+              <div class="p-3">
+                <h4 class="font-semibold text-sm text-amber-200 group-hover:text-amber-400 transition">Ruộng Bậc Thang Chiều Tà</h4>
+                <p class="text-xs text-amber-100/70 mt-1 line-clamp-2">Bức tranh thiên nhiên trù phú của vùng cao Việt Nam.</p>
+              </div>
+            </div>
+
+            <!-- Ảnh 3 -->
+            <div onclick="openImageModal('Hương lúa đồng quê thanh bình', 'Từng bông lúa trĩu hạt đung đưa trong gió chiều, biểu tượng của nền văn minh lúa nước Việt Nam.', 'https://images.unsplash.com/photo-1536657464919-892534f60d6e?auto=format&fit=crop&w=1000&q=80')" class="group cursor-pointer rounded-2xl overflow-hidden border border-amber-400/25 bg-amber-950/60 flex flex-col">
+              <div class="aspect-video overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1536657464919-892534f60d6e?auto=format&fit=crop&w=600&q=80" alt="Bông lúa chín" onerror="this.src='https://placehold.co/600x400/b45309/fef3c7?text=Bong+Lua+Chin'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <span class="absolute bottom-2 right-2 bg-black/60 text-amber-200 text-[10px] px-2 py-0.5 rounded-full"><i class="fa-solid fa-expand"></i> Xem</span>
+              </div>
+              <div class="p-3">
+                <h4 class="font-semibold text-sm text-amber-200 group-hover:text-amber-400 transition">Bông Lúa Trĩu Hạt</h4>
+                <p class="text-xs text-amber-100/70 mt-1 line-clamp-2">Vẻ đẹp mộc mạc, gần gũi gắn liền với đời sống người Việt.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cổng Liên Kết Trang Khác (Hoạt động nhấn mở thật) -->
+        <div class="glass-card rounded-3xl p-6 space-y-4">
+          <h3 class="font-serif text-xl font-bold text-amber-300 flex items-center gap-2">
+            <i class="fa-solid fa-up-right-from-square text-amber-400"></i> Liên Kết Truy Cập Nhanh
+          </h3>
+          <p class="text-xs text-amber-100/80">
+            Các đường dẫn công cụ học tập &amp; tài nguyên phục vụ trực tiếp cho Assignment CNTT 4.0:
+          </p>
+
+          <div class="space-y-2.5">
+            <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-amber-950/70 hover:bg-amber-800/60 border border-amber-400/25 transition group">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center">
+                  <i class="fa-solid fa-book-sparkles"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-amber-100 group-hover:text-amber-300">Google NotebookLM</div>
+                  <div class="text-[11px] text-amber-200/60">Công cụ Phần 1: Trợ lý học tập cá nhân</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-amber-400"></i>
+            </a>
+
+            <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-amber-950/70 hover:bg-amber-800/60 border border-amber-400/25 transition group">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center">
+                  <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-amber-100 group-hover:text-amber-300">Google AI Studio</div>
+                  <div class="text-[11px] text-amber-200/60">Công cụ Phần 2: Xây dựng ứng dụng AI</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-amber-400"></i>
+            </a>
+
+            <a href="https://app.diagrams.net/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-amber-950/70 hover:bg-amber-800/60 border border-amber-400/25 transition group">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-orange-500/20 text-orange-300 flex items-center justify-center">
+                  <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-amber-100 group-hover:text-amber-300">Draw.io (Diagrams.net)</div>
+                  <div class="text-[11px] text-amber-200/60">Vẽ phác thảo Wireframe &amp; Lưu đồ Y4</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-amber-400"></i>
+            </a>
+
+            <a href="https://caodang.fpt.edu.vn/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-amber-950/70 hover:bg-amber-800/60 border border-amber-400/25 transition group">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-amber-100 group-hover:text-amber-300">FPT Polytechnic Việt Nam</div>
+                  <div class="text-[11px] text-amber-200/60">Cổng thông tin đào tạo &amp; LMS</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-amber-400"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- TAB 2: PHẦN 1 - TRỢ LÝ HỌC TẬP & THƯ VIỆN SỐ (Y1, Y2, Y3) -->
+    <!-- ========================================================= -->
+    <section id="tab-part1" class="tab-content hidden fade-in space-y-6">
+      <div class="glass-card rounded-3xl p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-amber-400/20 pb-4">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold">PHẦN 1 ASSIGNMENT • GOOGLE NOTEBOOK LM</span>
+            <h2 class="font-serif text-2xl font-bold text-amber-200 mt-1">Thư Viện Số Cá Nhân &amp; Trợ Lý Học Tập</h2>
+            <p class="text-xs sm:text-sm text-amber-100/80">Đáp ứng đầy đủ Yêu cầu Y1 (8 Slide bài học), Y2 (PDF/Word, Hình ảnh/Video, Link web, Ghi chú cá nhân) và Y3 (Mở rộng môn học khác).</p>
+          </div>
+          <!-- Bộ chuyển đổi Thư viện môn học (Y3) -->
+          <div class="flex flex-wrap gap-2">
+            <button onclick="selectLibrarySubject('cntt4')" id="lib-btn-cntt4" class="lib-sub-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-amber-950 shadow">
+              <i class="fa-solid fa-microchip mr-1"></i> Môn CNTT 4.0 (Y1-Y2)
+            </button>
+            <button onclick="selectLibrarySubject('web')" id="lib-btn-web" class="lib-sub-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 text-amber-200 border border-amber-400/30 hover:bg-amber-800/60">
+              <i class="fa-solid fa-code mr-1"></i> Mở rộng: Thiết Kế Web (Y3)
+            </button>
+            <button onclick="selectLibrarySubject('softskill')" id="lib-btn-softskill" class="lib-sub-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 text-amber-200 border border-amber-400/30 hover:bg-amber-800/60">
+              <i class="fa-solid fa-users mr-1"></i> Mở rộng: Kỹ Năng Học Tập (Y3)
+            </button>
+          </div>
+        </div>
+
+        <!-- Giao diện 3 cột mô phỏng Google NotebookLM -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+          
+          <!-- Cột 1 (4/12): Danh sách Nguồn Tài Liệu (8 Slides + Media + Links) -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="bg-amber-950/75 rounded-2xl p-4 border border-amber-400/25 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-sm text-amber-300 uppercase tracking-wider">
+                  <i class="fa-solid fa-layer-group mr-1.5"></i> Nguồn Tài Liệu Đã Thu Thập
+                </h3>
+                <span id="source-count-badge" class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold">8 Slides + 4 Nguồn</span>
+              </div>
+
+              <!-- Danh sách nguồn render bằng JS -->
+              <div id="notebook-sources-list" class="space-y-2 max-h-[430px] overflow-y-auto pr-1">
+                <!-- Nội dung sinh động -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột 2 (8/12): Trình Đọc Chi Tiết Nguồn, Video/Ảnh, Link & Hỏi Đáp Trợ Lý NotebookLM -->
+          <div class="lg:col-span-8 space-y-4">
+            <!-- Khung xem chi tiết nguồn tài liệu đang chọn -->
+            <div id="source-viewer-card" class="bg-amber-950/75 rounded-2xl p-5 border border-amber-400/25 space-y-4">
+              <!-- Nội dung render bằng JS -->
+            </div>
+
+            <!-- Trợ lý hỏi đáp trên nguồn tài liệu (Mô phỏng NotebookLM Chat) -->
+            <div class="bg-amber-950/75 rounded-2xl p-5 border border-amber-400/25 space-y-3">
+              <div class="flex items-center justify-between">
+                <h4 class="font-bold text-sm text-amber-300 flex items-center gap-2">
+                  <i class="fa-solid fa-robot text-amber-400"></i> Trợ Lý Hỏi Đáp Tài Liệu (NotebookLM Simulator)
+                </h4>
+                <span class="text-[11px] text-amber-200/60">Trích xuất thông tin từ 8 bài học CNTT 4.0</span>
+              </div>
+
+              <div id="notebook-chat-box" class="bg-black/30 rounded-xl p-3.5 max-h-48 overflow-y-auto space-y-2.5 text-xs sm:text-sm">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-6 h-6 rounded-lg bg-amber-500 text-amber-950 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">AI</span>
+                  <div class="bg-amber-900/50 border border-amber-400/20 rounded-xl p-2.5 text-amber-100">
+                    Xin chào <strong>Phó Minh Quốc Knul (PK04952)</strong>! Tôi đã tổng hợp xong <strong>8 Slide bài học môn CNTT 4.0</strong> cùng các tài liệu PDF, hình ảnh, video và liên kết web. Bạn muốn hỏi hoặc tóm tắt nội dung bài nào?
+                  </div>
+                </div>
+              </div>
+
+              <!-- Câu hỏi gợi ý nhanh -->
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="askNotebookAI('Tóm tắt nội dung chính của 8 bài học CNTT 4.0')" class="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/30 text-amber-200 border border-amber-400/25 transition">
+                  ✨ Tóm tắt 8 bài học
+                </button>
+                <button onclick="askNotebookAI('Xu hướng công nghệ tương lai trong Bài 2 & Bài 3 là gì?')" class="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/30 text-amber-200 border border-amber-400/25 transition">
+                  🚀 Xu hướng AI &amp; IoT
+                </button>
+                <button onclick="askNotebookAI('Các nghề nghiệp hot trong lĩnh vực CNTT ở Bài 7 & Bài 8?')" class="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/30 text-amber-200 border border-amber-400/25 transition">
+                  💼 Nghề nghiệp CNTT
+                </button>
+              </div>
+
+              <form onsubmit="handleNotebookChatSubmit(event)" class="flex gap-2">
+                <input type="text" id="notebook-chat-input" placeholder="Nhập câu hỏi về tài liệu CNTT 4.0..." class="flex-grow bg-black/40 border border-amber-400/30 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-amber-100 placeholder-amber-200/40 focus:outline-none focus:border-amber-400" />
+                <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold text-xs sm:text-sm transition">
+                  Gửi <i class="fa-solid fa-paper-plane ml-1"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- TAB 3: PHẦN 2 - ỨNG DỤNG QUẢN LÝ GHI CHÚ AI (Y4, Y5, Y6)  -->
+    <!-- ========================================================= -->
+    <section id="tab-part2" class="tab-content hidden fade-in space-y-6">
+      
+      <!-- Header Phần 2 + Chuyển đổi Sub-tab (Ứng dụng thực tế vs Bản vẽ phác thảo Y4) -->
+      <div class="glass-card rounded-3xl p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-amber-400/20 pb-4">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold">PHẦN 2 ASSIGNMENT • GOOGLE AI STUDIO &amp; WIREFRAME</span>
+            <h2 class="font-serif text-2xl font-bold text-amber-200 mt-1">Ứng Dụng Quản Lý Ghi Chú Cá Nhân Thông Minh</h2>
+            <p class="text-xs sm:text-sm text-amber-100/80">Tích hợp đầy đủ Y4 (Bản vẽ phác thảo &amp; luồng vận hành), Y5 (&ge; 10 ghi chú ý nghĩa trong &ge; 5 ngày) và Y6 (Trợ lý AI).</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="switchPart2Mode('app')" id="p2-btn-app" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 text-amber-950 shadow transition">
+              <i class="fa-solid fa-note-sticky mr-1"></i> Ứng Dụng Ghi Chú (Y5 &amp; Y6)
+            </button>
+            <button onclick="switchPart2Mode('wireframe')" id="p2-btn-wireframe" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-950/80 text-amber-200 border border-amber-400/30 hover:bg-amber-800/60 transition">
+              <i class="fa-solid fa-compass-drafting mr-1"></i> Bản Vẽ Phác Thảo (Y4)
+            </button>
+          </div>
+        </div>
+
+        <!-- CHẾ ĐỘ 1: ỨNG DỤNG QUẢN LÝ GHI CHÚ CÁ NHÂN TÍCH HỢP AI (Y5 & Y6) -->
+        <div id="p2-mode-app" class="mt-6 space-y-6">
+          
+          <!-- Thống kê đáp ứng tiêu chí Y5 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-amber-950/80 border border-amber-400/25 rounded-2xl p-3.5">
+              <div class="text-xs text-amber-200/70">Tổng số ghi chú (Yêu cầu &ge; 10)</div>
+              <div class="text-2xl font-extrabold text-amber-300 mt-1 flex items-center justify-between">
+                <span id="stat-total-notes">12</span>
+                <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">Đạt chuẩn Y5</span>
+              </div>
+            </div>
+            <div class="bg-amber-950/80 border border-amber-400/25 rounded-2xl p-3.5">
+              <div class="text-xs text-amber-200/70">Số ngày áp dụng (Yêu cầu &ge; 5)</div>
+              <div class="text-2xl font-extrabold text-emerald-300 mt-1 flex items-center justify-between">
+                <span id="stat-total-days">6 ngày</span>
+                <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">Đạt chuẩn Y5</span>
+              </div>
+            </div>
+            <div class="bg-amber-950/80 border border-amber-400/25 rounded-2xl p-3.5">
+              <div class="text-xs text-amber-200/70">Đã hoàn thành</div>
+              <div class="text-2xl font-extrabold text-amber-200 mt-1" id="stat-completed-notes">9</div>
+            </div>
+            <div class="bg-amber-950/80 border border-amber-400/25 rounded-2xl p-3.5">
+              <div class="text-xs text-amber-200/70">Tính năng AI (Y6)</div>
+              <div class="text-sm font-bold text-purple-300 mt-2 flex items-center gap-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Sẵn sàng hoạt động
+              </div>
+            </div>
+          </div>
+
+          <!-- Thanh công cụ AI Thông Minh (Y6) -->
+          <div class="bg-gradient-to-r from-amber-950/90 via-purple-950/40 to-amber-950/90 border border-purple-400/30 rounded-2xl p-4 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center">
+                  <i class="fa-solid fa-brain"></i>
+                </span>
+                <div>
+                  <h3 class="font-bold text-sm text-purple-200">Trợ Lý AI Quản Lý Ghi Chú (Yêu cầu mở rộng Y6)</h3>
+                  <p class="text-[11px] text-amber-100/70">Tự động phân tích, tóm tắt tiến độ 6 ngày và đề xuất kế hoạch ôn tập bảo vệ Assignment</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="runAINoteAction('summarize')" class="px-3 py-1.5 rounded-xl bg-purple-600/80 hover:bg-purple-500 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-align-left"></i> AI Tóm tắt toàn bộ
+                </button>
+                <button onclick="runAINoteAction('plan')" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-amber-950 text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-calendar-check"></i> AI Lập lịch bảo vệ
+                </button>
+                <button onclick="runAINoteAction('priority')" class="px-3 py-1.5 rounded-xl bg-emerald-600/80 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-bolt"></i> AI Lọc việc ưu tiên
+                </button>
+              </div>
+            </div>
+
+            <!-- Khung kết quả phân tích AI -->
+            <div id="ai-note-output" class="hidden bg-black/40 border border-purple-400/25 rounded-xl p-3.5 text-xs sm:text-sm text-amber-100 leading-relaxed">
+            </div>
+          </div>
+
+          <!-- Khu vực Thêm mới & Danh sách Ghi chú -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Form Tạo Ghi Chú Mới (4/12) -->
+            <div class="lg:col-span-4">
+              <form onsubmit="handleAddNote(event)" class="bg-amber-950/80 border border-amber-400/25 rounded-2xl p-4 space-y-3 sticky top-28">
+                <h3 class="font-bold text-base text-amber-300 flex items-center gap-2">
+                  <i class="fa-solid fa-plus-circle"></i> Thêm Ghi Chú Cá Nhân Mới
+                </h3>
+                
+                <div>
+                  <label class="block text-xs text-amber-200/80 mb-1">Tiêu đề ghi chú *</label>
+                  <input type="text" id="note-title" required placeholder="VD: Ôn tập câu hỏi vấn đáp..." class="w-full bg-black/40 border border-amber-400/30 rounded-xl px-3 py-2 text-xs sm:text-sm text-amber-100 focus:outline-none focus:border-amber-400" />
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-xs text-amber-200/80 mb-1">Ngày thực hiện *</label>
+                    <input type="date" id="note-date" required value="2026-11-20" class="w-full bg-black/40 border border-amber-400/30 rounded-xl px-2.5 py-2 text-xs text-amber-100 focus:outline-none focus:border-amber-400" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-amber-200/80 mb-1">Danh mục (AI gợi ý)</label>
+                    <select id="note-category" class="w-full bg-amber-950 border border-amber-400/30 rounded-xl px-2.5 py-2 text-xs text-amber-100 focus:outline-none focus:border-amber-400">
+                      <option value="Học tập CNTT 4.0">Học tập CNTT 4.0</option>
+                      <option value="Thực hành NotebookLM">Thực hành NotebookLM</option>
+                      <option value="Thiết kế & Code App">Thiết kế &amp; Code App</option>
+                      <option value="Kế hoạch cá nhân">Kế hoạch cá nhân</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs text-amber-200/80 mb-1">Nội dung chi tiết *</label>
+                  <textarea id="note-content" rows="3" required placeholder="Nhập nội dung ghi chú có ý nghĩa..." class="w-full bg-black/40 border border-amber-400/30 rounded-xl px-3 py-2 text-xs sm:text-sm text-amber-100 focus:outline-none focus:border-amber-400"></textarea>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                  <button type="button" onclick="autoSuggestNoteWithAI()" class="text-xs text-purple-300 hover:text-purple-200 flex items-center gap-1">
+                    <i class="fa-solid fa-sparkles"></i> AI gợi ý mẫu ghi chú
+                  </button>
+                  <button type="submit" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-amber-950 font-bold text-xs sm:text-sm shadow transition">
+                    Lưu Ghi Chú
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Danh sách & Bộ lọc Ghi chú (8/12) -->
+            <div class="lg:col-span-8 space-y-4">
+              <!-- Thanh tìm kiếm & lọc -->
+              <div class="flex flex-col sm:flex-row gap-2">
+                <div class="relative flex-grow">
+                  <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-amber-400/70 text-xs"></i>
+                  <input type="text" id="note-search" oninput="renderNotes()" placeholder="Tìm kiếm ghi chú theo tiêu đề hoặc nội dung..." class="w-full bg-amber-950/80 border border-amber-400/25 rounded-xl pl-9 pr-3 py-2 text-xs sm:text-sm text-amber-100 focus:outline-none focus:border-amber-400" />
+                </div>
+                <select id="note-filter-day" onchange="renderNotes()" class="bg-amber-950/80 border border-amber-400/25 rounded-xl px-3 py-2 text-xs sm:text-sm text-amber-100 focus:outline-none focus:border-amber-400">
+                  <option value="ALL">Tất cả các ngày (6 ngày)</option>
+                </select>
+                <button onclick="resetSampleNotes()" title="Khôi phục 12 ghi chú mẫu" class="px-3 py-2 rounded-xl bg-amber-950/80 hover:bg-amber-800/60 border border-amber-400/25 text-xs text-amber-200 whitespace-nowrap">
+                  <i class="fa-solid fa-rotate-left"></i> Mẫu gốc
+                </button>
+              </div>
+
+              <!-- Lưới hiển thị các thẻ ghi chú -->
+              <div id="notes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <!-- Render bằng JavaScript -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CHẾ ĐỘ 2: BẢN VẼ PHÁC THẢO & LƯU ĐỒ VẬN HÀNH (Y4) -->
+        <div id="p2-mode-wireframe" class="hidden mt-6 space-y-6">
+          <div class="bg-amber-950/75 border border-amber-400/25 rounded-2xl p-5 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 class="font-serif text-xl font-bold text-amber-300">Yêu Cầu Y4: Bản Vẽ Phác Thảo (Wireframe) &amp; Cách Vận Hành</h3>
+                <p class="text-xs text-amber-100/80">Thiết kế mô phỏng bằng Draw.io / Figma cho Ứng dụng Quản lý Ghi chú Cá nhân thông minh</p>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 text-xs font-semibold">Đầy đủ 3 mục: Y4a, Y4b, Y4c</span>
+            </div>
+
+            <!-- 3 Khung Phác Thảo Trực Quan (SVG Wireframes) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <!-- Y4a: Giao diện chính -->
+              <div class="bg-black/40 border border-amber-400/30 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-amber-300 uppercase">Y4a. Giao diện chính</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-200">Dashboard</span>
+                </div>
+                <!-- Sơ đồ Wireframe SVG -->
+                <svg viewBox="0 0 280 180" class="w-full h-auto rounded-xl bg-stone-900 border border-amber-400/20 p-2">
+                  <!-- Header -->
+                  <rect x="8" y="8" width="264" height="22" rx="4" fill="#78350f" stroke="#fbbf24" stroke-width="1"/>
+                  <text x="16" y="22" fill="#fef3c7" font-size="8" font-weight="bold">HEADER: App Quản Lý Ghi Chú AI - PK04952</text>
+                  <!-- Stat Cards -->
+                  <rect x="8" y="36" width="84" height="26" rx="4" fill="#292524" stroke="#f59e0b" stroke-width="0.8"/>
+                  <text x="16" y="52" fill="#fcd34d" font-size="7">Tổng: 12 Ghi chú</text>
+                  <rect x="98" y="36" width="84" height="26" rx="4" fill="#292524" stroke="#10b981" stroke-width="0.8"/>
+                  <text x="106" y="52" fill="#6ee7b7" font-size="7">Thời gian: 6 Ngày</text>
+                  <rect x="188" y="36" width="84" height="26" rx="4" fill="#3b0764" stroke="#c084fc" stroke-width="0.8"/>
+                  <text x="196" y="52" fill="#e9d5ff" font-size="7">Trợ lý AI (Y6)</text>
+                  <!-- Sidebar Form -->
+                  <rect x="8" y="68" width="88" height="104" rx="4" fill="#1c1917" stroke="#fbbf24" stroke-dasharray="2,2"/>
+                  <text x="15" y="82" fill="#fbbf24" font-size="7" font-weight="bold">+ Form Thêm Mới</text>
+                  <rect x="14" y="88" width="76" height="14" rx="2" fill="#292524"/>
+                  <rect x="14" y="106" width="76" height="14" rx="2" fill="#292524"/>
+                  <rect x="14" y="124" width="76" height="26" rx="2" fill="#292524"/>
+                  <rect x="14" y="154" width="76" height="12" rx="3" fill="#f59e0b"/>
+                  <!-- Main List -->
+                  <rect x="102" y="68" width="170" height="104" rx="4" fill="#1c1917" stroke="#fbbf24" stroke-width="0.8"/>
+                  <text x="110" y="82" fill="#fef3c7" font-size="7" font-weight="bold">Danh sách thẻ ghi chú (Grid)</text>
+                  <rect x="110" y="88" width="74" height="36" rx="3" fill="#292524" stroke="#78350f"/>
+                  <rect x="190" y="88" width="74" height="36" rx="3" fill="#292524" stroke="#78350f"/>
+                  <rect x="110" y="130" width="74" height="36" rx="3" fill="#292524" stroke="#78350f"/>
+                  <rect x="190" y="130" width="74" height="36" rx="3" fill="#292524" stroke="#78350f"/>
+                </svg>
+                <p class="text-xs text-amber-100/80 leading-relaxed">
+                  Bố cục 2 cột trực quan: Bên trái là khu vực nhập liệu nhanh, bên phải là lưới hiển thị ghi chú kèm thanh thống kê tiến độ theo ngày.
+                </p>
+              </div>
+
+              <!-- Y4b: Giao diện các chức năng chính -->
+              <div class="bg-black/40 border border-amber-400/30 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-amber-300 uppercase">Y4b. Giao diện chức năng</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200">CRUD &amp; AI</span>
+                </div>
+                <svg viewBox="0 0 280 180" class="w-full h-auto rounded-xl bg-stone-900 border border-amber-400/20 p-2">
+                  <!-- Search & Filter Bar -->
+                  <rect x="10" y="10" width="160" height="20" rx="4" fill="#292524" stroke="#fbbf24"/>
+                  <text x="18" y="23" fill="#fef3c7" font-size="7">🔍 Tìm kiếm từ khóa...</text>
+                  <rect x="176" y="10" width="94" height="20" rx="4" fill="#292524" stroke="#34d399"/>
+                  <text x="184" y="23" fill="#6ee7b7" font-size="7">📅 Lọc theo ngày</text>
+                  <!-- Note Card Detail -->
+                  <rect x="10" y="38" width="260" height="68" rx="6" fill="#292524" stroke="#f59e0b" stroke-width="1.2"/>
+                  <text x="20" y="54" fill="#fcd34d" font-size="8" font-weight="bold">Thẻ Ghi Chú Chi Tiết #01</text>
+                  <text x="20" y="68" fill="#e7e5e4" font-size="7">• Hiển thị Ngày tạo + Danh mục + Trạng thái</text>
+                  <text x="20" y="80" fill="#e7e5e4" font-size="7">• Nội dung ghi chú học tập CNTT 4.0</text>
+                  <rect x="20" y="88" width="48" height="12" rx="2" fill="#059669"/>
+                  <text x="28" y="96" fill="#fff" font-size="6">✓ Xong</text>
+                  <rect x="74" y="88" width="48" height="12" rx="2" fill="#d97706"/>
+                  <text x="84" y="96" fill="#fff" font-size="6">✎ Sửa</text>
+                  <rect x="128" y="88" width="48" height="12" rx="2" fill="#dc2626"/>
+                  <text x="138" y="96" fill="#fff" font-size="6">🗑 Xóa</text>
+                  <!-- AI Box -->
+                  <rect x="10" y="114" width="260" height="56" rx="6" fill="#3b0764" stroke="#c084fc"/>
+                  <text x="20" y="130" fill="#e9d5ff" font-size="8" font-weight="bold">✨ Module Trí Tuệ Nhân Tạo (Y6)</text>
+                  <text x="20" y="144" fill="#f3e8ff" font-size="7">[Tóm tắt nội dung]  [Gợi ý kế hoạch]  [Tự động gắn nhãn]</text>
+                </svg>
+                <p class="text-xs text-amber-100/80 leading-relaxed">
+                  Gồm 4 nhóm chức năng: (1) Thêm/Sửa/Xóa ghi chú, (2) Đánh dấu hoàn thành, (3) Tìm kiếm &amp; Lọc theo ngày, (4) Trợ lý AI phân tích thông minh.
+                </p>
+              </div>
+
+              <!-- Y4c: Cách vận hành các chức năng chính -->
+              <div class="bg-black/40 border border-amber-400/30 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-amber-300 uppercase">Y4c. Luồng vận hành</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-200">Workflow</span>
+                </div>
+                <svg viewBox="0 0 280 180" class="w-full h-auto rounded-xl bg-stone-900 border border-amber-400/20 p-2">
+                  <!-- Step 1 -->
+                  <rect x="65" y="8" width="150" height="24" rx="12" fill="#d97706"/>
+                  <text x="92" y="23" fill="#fff" font-size="7.5" font-weight="bold">1. Người dùng nhập Ghi chú</text>
+                  <line x1="140" y1="32" x2="140" y2="46" stroke="#fbbf24" stroke-width="1.5"/>
+                  <!-- Step 2 -->
+                  <rect x="45" y="46" width="190" height="26" rx="4" fill="#292524" stroke="#fbbf24"/>
+                  <text x="64" y="62" fill="#fef3c7" font-size="7.5">2. Kiểm tra dữ liệu &amp; Lưu LocalStorage</text>
+                  <line x1="140" y1="72" x2="140" y2="86" stroke="#fbbf24" stroke-width="1.5"/>
+                  <!-- Step 3 -->
+                  <rect x="35" y="86" width="210" height="28" rx="4" fill="#3b0764" stroke="#c084fc"/>
+                  <text x="52" y="103" fill="#e9d5ff" font-size="7.5">3. AI phân tích từ khóa, tóm tắt &amp; gợi ý lịch</text>
+                  <line x1="140" y1="114" x2="140" y2="128" stroke="#fbbf24" stroke-width="1.5"/>
+                  <!-- Step 4 -->
+                  <rect x="55" y="128" width="170" height="26" rx="4" fill="#065f46" stroke="#34d399"/>
+                  <text x="72" y="144" fill="#d1fae5" font-size="7.5">4. Cập nhật UI &amp; Thống kê tiến độ</text>
+                </svg>
+                <p class="text-xs text-amber-100/80 leading-relaxed">
+                  Dữ liệu được xác thực đầu vào, lưu bền vững trên trình duyệt (LocalStorage), đồng bộ tức thì với bộ đếm số ngày &amp; mô-đun AI xử lý ngôn ngữ.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- TAB 4: ĐÓNG GÓI SẢN PHẨM & TIÊU CHÍ CHẤM ĐIỂM (PDF TRANG 3-5) -->
+    <!-- ========================================================= -->
+    <section id="tab-submission" class="tab-content hidden fade-in space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Cấu trúc đóng gói file ZIP chuẩn theo PDF -->
+        <div class="lg:col-span-7 glass-card rounded-3xl p-6 space-y-4">
+          <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold">MÔ TẢ SẢN PHẨM PHẢI NỘP (TRANG 3 PDF)</span>
+          <h2 class="font-serif text-2xl font-bold text-amber-200">Quy Cách Đóng Gói Bài Nộp Chuẩn</h2>
+          <p class="text-xs sm:text-sm text-amber-100/85">
+            Theo hướng dẫn của giảng viên <strong>Lã Ngọc Quang</strong>, sản phẩm Assignment của sinh viên <strong>Phó Minh Quốc Knul</strong> được đóng gói theo đúng cú pháp quy định:
+          </p>
+
+          <!-- Tên file ZIP chuẩn -->
+          <div class="p-4 rounded-2xl bg-amber-950/90 border border-amber-400/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-amber-300/80 uppercase font-semibold">Tên tệp tin nén nộp bài (.zip):</div>
+              <code id="zip-filename" class="text-sm sm:text-base font-bold text-emerald-300 break-all">PK04952-PhoMinhQuocKnul_CNTT4.0_Assignment.zip</code>
+            </div>
+            <button onclick="copyZipName()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold text-xs shrink-0 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-copy"></i> Sao chép tên file
+            </button>
+          </div>
+
+          <!-- Cây thư mục bên trong file ZIP -->
+          <div class="bg-black/40 border border-amber-400/20 rounded-2xl p-4 font-mono text-xs text-amber-100 space-y-1.5">
+            <div class="text-amber-400 font-bold"><i class="fa-solid fa-file-zipper mr-1.5"></i> PK04952-PhoMinhQuocKnul_CNTT4.0_Assignment.zip</div>
+            <div class="pl-4">├── <i class="fa-solid fa-file-pdf text-red-400 mr-1"></i> BaoCao_Assignment_CNTT4.0_PK04952.pdf <span class="text-amber-200/50">(Báo cáo quá trình thực hiện Y1-Y6)</span></div>
+            <div class="pl-4">├── <i class="fa-solid fa-file-powerpoint text-orange-400 mr-1"></i> Slide_ThuyetTrinh_CNTT4.0_PK04952.pptx <span class="text-amber-200/50">(Slide tóm tắt bảo vệ)</span></div>
+            <div class="pl-4">├── <i class="fa-solid fa-folder-open text-amber-300 mr-1"></i> Phan1_ThuVienSo_NotebookLM/ <span class="text-amber-200/50">(8 Slide bài giảng + Minh chứng ảnh)</span></div>
+            <div class="pl-4">└── <i class="fa-solid fa-folder-open text-emerald-400 mr-1"></i> Phan2_UngDungGhiChuAI/ <span class="text-amber-200/50">(File phác thảo DrawIO + Source Web App HTML)</span></div>
+          </div>
+
+          <!-- Checklist tự kiểm tra trước khi bảo vệ -->
+          <div class="space-y-2 pt-2">
+            <h3 class="font-bold text-sm text-amber-300">Bảng kiểm tra hoàn thành các yêu cầu (Checklist):</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2 text-emerald-200">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Y1: Thu thập đủ 8 Slide bài học
+              </div>
+              <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2 text-emerald-200">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Y2: Đủ File, Ảnh/Video, Link &amp; Ghi chú
+              </div>
+              <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2 text-emerald-200">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Y3: Mở rộng thư viện các môn học khác
+              </div>
+              <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2 text-emerald-200">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Y4: Bản vẽ phác thảo &amp; Luồng vận hành
+              </div>
+              <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2 text-emerald-200">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Y5: &ge; 10 ghi chú trong &ge; 5 ngày (12 ghi chú/6 ngày)
+              </div>
+              <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2 text-emerald-200">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Y6: Tích hợp AI quản lý &amp; tóm tắt ghi chú
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cơ cấu điểm & Tiêu chí đánh giá bảo vệ (Trang 4-5 PDF) -->
+        <div class="lg:col-span-5 glass-card rounded-3xl p-6 space-y-4">
+          <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold">ĐÁNH GIÁ ASSIGNMENT (60% MÔN HỌC)</span>
+          <h2 class="font-serif text-2xl font-bold text-amber-200">Cơ Cấu Điểm &amp; Tiêu Chí Bảo Vệ</h2>
+
+          <div class="space-y-3">
+            <div class="p-3.5 rounded-2xl bg-amber-950/75 border border-amber-400/25 flex items-center justify-between">
+              <div>
+                <div class="font-bold text-sm text-amber-200">Giai đoạn 1 (Phần 1: NotebookLM)</div>
+                <div class="text-xs text-amber-100/70">Nộp thư viện số 8 bài học &amp; tài liệu mở rộng</div>
+              </div>
+              <span class="text-lg font-extrabold text-amber-400">10%</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-amber-950/75 border border-amber-400/25 flex items-center justify-between">
+              <div>
+                <div class="font-bold text-sm text-amber-200">Giai đoạn 2 (Phần 2: App Ghi Chú AI)</div>
+                <div class="text-xs text-amber-100/70">Bản phác thảo Y4 &amp; Ứng dụng thực tế Y5-Y6</div>
+              </div>
+              <span class="text-lg font-extrabold text-amber-400">10%</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-900/80 to-orange-900/70 border border-amber-400/40 flex items-center justify-between">
+              <div>
+                <div class="font-bold text-sm text-amber-200">Bảo vệ Assignment trước Hội đồng</div>
+                <div class="text-xs text-amber-100/80">Thực hành demo trực tiếp &amp; trả lời vấn đáp</div>
+              </div>
+              <span class="text-xl font-extrabold text-emerald-300">40%</span>
+            </div>
+          </div>
+
+          <div class="bg-amber-950/75 rounded-2xl p-4 border border-amber-400/20 space-y-2">
+            <h4 class="font-bold text-xs uppercase tracking-wider text-amber-300">4 Tiêu chí đánh giá thực hành (Trang 5 PDF):</h4>
+            <ul class="text-xs text-amber-100/85 space-y-1.5">
+              <li><strong class="text-amber-300">1. Nội dung:</strong> Đầy đủ nội dung theo yêu cầu Y1 – Y6.</li>
+              <li><strong class="text-amber-300">2. Thời gian:</strong> Hoàn thành và trình bày đúng thời gian quy định.</li>
+              <li><strong class="text-amber-300">3. Kỹ năng trình bày:</strong> Rõ ràng, dễ hiểu, mạch lạc, tự tin.</li>
+              <li><strong class="text-amber-300">4. Sản phẩm:</strong> Đẹp, sinh động, sáng tạo (Giao diện Đồng lúa Việt Nam &amp; Bác Hồ).</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="glass-card border-t border-amber-400/20 mt-8 py-4 px-4 text-center text-xs text-amber-200/75">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>
+        © 2026 • Sinh viên <strong class="text-amber-300">Phó Minh Quốc Knul</strong> • MSSV: <strong class="text-amber-300">PK04952</strong> • Lớp: <strong class="text-emerald-300">ITI102-WD22301</strong>
+      </div>
+      <div>
+        Cao đẳng FPT Polytechnic • Môn học: <span class="text-amber-300 font-semibold">CNTT 4.0 (Assignment)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL XEM HÌNH ẢNH PHÓNG TO -->
+  <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeImageModal()">
+    <div class="glass-card max-w-2xl w-full rounded-3xl overflow-hidden border border-amber-400/40" onclick="event.stopPropagation()">
+      <div class="relative">
+        <img id="modal-img" src="" alt="Preview" class="w-full max-h-[65vh] object-cover" />
+        <button onclick="closeImageModal()" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/70 text-amber-200 hover:bg-amber-500 hover:text-amber-950 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-4">
+        <h3 id="modal-title" class="font-serif text-lg font-bold text-amber-300"></h3>
+        <p id="modal-desc" class="text-xs sm:text-sm text-amber-100/85 mt-1"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST THÔNG BÁO TƯƠNG TÁC -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300 bg-amber-950 border border-amber-400 text-amber-100 px-4 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm flex items-center gap-2.5">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toast-msg">Thao tác thành công!</span>
+  </div>
+
+  <!-- JAVASCRIPT XỬ LÝ TƯƠNG TÁC TOÀN BỘ ỨNG DỤNG -->
+  <script>
+    // ==========================================
+    // 1. DỮ LIỆU PHẦN 1: THƯ VIỆN SỐ NOTEBOOK LM
+    // ==========================================
+    const libraryData = {
+      cntt4: [
+        {
+          id: 'slide1',
+          type: 'PDF / Slide',
+          icon: 'fa-file-pdf text-red-400',
+          title: 'Slide 1: Tổng quan về Cách mạng Công nghiệp 4.0',
+          summary: 'Lịch sử 4 cuộc cách mạng công nghiệp từ cơ khí hóa, điện khí hóa, tự động hóa đến kỷ nguyên số hóa và kết nối vạn vật.',
+          personalNote: 'Ghi chú cá nhân (PK04952): Trọng tâm của CMCN 4.0 là sự hội tụ giữa thế giới thực, thế giới số và sinh học. Cần nắm rõ các cột mốc thời gian để trả lời vấn đáp.',
+          link: 'https://vi.wikipedia.org/wiki/C%C3%A1ch_m%E1%BA%A1ng_C%C3%B4ng_nghi%E1%BB%87p_l%E1%BA%A7n_th%E1%BB%A9_t%C6%B0',
+          linkText: 'Đọc thêm trên Wikipedia: Cách mạng Công nghiệp 4.0',
+          image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide2',
+          type: 'PDF / Slide',
+          icon: 'fa-file-powerpoint text-orange-400',
+          title: 'Slide 2: Trí tuệ nhân tạo (AI) & Học máy (Machine Learning)',
+          summary: 'Khái niệm AI, phân biệt AI hẹp (ANI) và AI tổng quát (AGI), ứng dụng của Generative AI trong học tập và lập trình.',
+          personalNote: 'Ghi chú cá nhân: Ứng dụng trực tiếp kiến thức bài 2 vào việc dùng Google NotebookLM và Google AI Studio để xây dựng ứng dụng ghi chú thông minh.',
+          link: 'https://aistudio.google.com/',
+          linkText: 'Thực hành trực tiếp tại Google AI Studio',
+          image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide3',
+          type: 'PDF / Slide',
+          icon: 'fa-file-pdf text-red-400',
+          title: 'Slide 3: Internet vạn vật (IoT) & Điện toán đám mây (Cloud)',
+          summary: 'Cách các thiết bị thông minh thu thập dữ liệu qua cảm biến và lưu trữ, xử lý trên hạ tầng Cloud Computing.',
+          personalNote: 'Ghi chú cá nhân: Liên hệ thực tế nông nghiệp thông minh 4.0 trên đồng lúa Việt Nam: cảm biến độ ẩm đất kết nối IoT giúp tưới tiêu tự động.',
+          link: 'https://cloud.google.com/learn/what-is-cloud-computing',
+          linkText: 'Tìm hiểu Google Cloud Computing',
+          image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide4',
+          type: 'PDF / Slide',
+          icon: 'fa-file-word text-blue-400',
+          title: 'Slide 4: Dữ liệu lớn (Big Data) & Phân tích dữ liệu',
+          summary: 'Đặc trưng 5V của Big Data (Volume, Velocity, Variety, Veracity, Value) và vai trò của dữ liệu trong ra quyết định.',
+          personalNote: 'Ghi chú cá nhân: Cần nhớ kỹ 5 chữ V của Big Data vì giảng viên rất hay hỏi trong phần vấn đáp bảo vệ Assignment.',
+          link: 'https://www.ibm.com/topics/big-data',
+          linkText: 'Tài liệu tham khảo IBM Big Data',
+          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide5',
+          type: 'PDF / Slide',
+          icon: 'fa-file-pdf text-red-400',
+          title: 'Slide 5: Công nghệ Chuỗi khối (Blockchain) & An toàn thông tin',
+          summary: 'Nguyên lý sổ cái phân tán, tính bất biến của Blockchain và các nguyên tắc bảo mật tài khoản cá nhân trên không gian mạng.',
+          personalNote: 'Ghi chú cá nhân: Luôn bật xác thực 2 lớp (2FA) cho tài khoản email sinh viên FPT và quản lý mật khẩu an toàn.',
+          link: 'https://www.cloudflare.com/learning/security/what-is-cybersecurity/',
+          linkText: 'Kiến thức An toàn thông tin Cloudflare',
+          image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide6',
+          type: 'PDF / Slide',
+          icon: 'fa-file-powerpoint text-orange-400',
+          title: 'Slide 6: Công cụ số hỗ trợ học tập & Làm việc nhóm',
+          summary: 'Khai thác Google Workspace, Notion, Draw.io, NotebookLM để tối ưu hóa năng suất học tập và quản lý dự án.',
+          personalNote: 'Ghi chú cá nhân: Đã sử dụng Draw.io để vẽ phác thảo giao diện (Y4) và NotebookLM để tổng hợp 8 slide bài giảng (Y1).',
+          link: 'https://notebooklm.google.com/',
+          linkText: 'Mở công cụ Google NotebookLM',
+          image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide7',
+          type: 'PDF / Slide',
+          icon: 'fa-file-pdf text-red-400',
+          title: 'Slide 7: Các chuyên ngành & Nghề nghiệp trong lĩnh vực CNTT',
+          summary: 'Tổng quan lộ trình nghề nghiệp: Phát triển Web (Frontend/Backend), Lập trình Mobile, Kiểm thử (Tester), Thiết kế UI/UX, Phân tích dữ liệu.',
+          personalNote: 'Ghi chú cá nhân: Mình thuộc lớp ITI102-WD22301 (chuyên ngành Thiết kế Web / Lập trình), định hướng trở thành Fullstack Web Developer.',
+          link: 'https://roadmap.sh/',
+          linkText: 'Xem bản đồ lộ trình nghề nghiệp IT (Roadmap.sh)',
+          image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'slide8',
+          type: 'PDF / Slide',
+          icon: 'fa-file-word text-blue-400',
+          title: 'Slide 8: Đạo đức nghề nghiệp & Kỹ năng công dân số',
+          summary: 'Bản quyền số, sử dụng AI có trách nhiệm, văn hóa ứng xử trên mạng xã hội và tinh thần học tập suốt đời.',
+          personalNote: 'Ghi chú cá nhân: Thực hiện đúng quy định của FPT Polytechnic: tự tay thực hiện bài Assignment, trích dẫn nguồn rõ ràng, không sao chép.',
+          link: 'https://caodang.fpt.edu.vn/',
+          linkText: 'Cổng thông tin Sinh viên FPT Polytechnic',
+          image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'media1',
+          type: 'Video & Hình ảnh (Y2b)',
+          icon: 'fa-circle-play text-emerald-400',
+          title: 'Tài liệu Video & Hình ảnh: Nông nghiệp 4.0 & Đồng lúa Việt Nam',
+          summary: 'Bộ sưu tập hình ảnh chất lượng cao và video tư liệu về ứng dụng công nghệ số vào canh tác lúa nước tại Việt Nam.',
+          personalNote: 'Ghi chú cá nhân: Hình ảnh đồng lúa chiều tà kết hợp chân dung Bác Hồ tạo cảm hứng truyền thống hòa quyện hiện đại cho giao diện web.',
+          link: 'https://www.youtube.com/results?search_query=cong+nghe+4.0+trong+nong+nghiep+viet+nam',
+          linkText: 'Xem Video tư liệu trên YouTube',
+          image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80'
+        }
+      ],
+      web: [
+        {
+          id: 'web1',
+          type: 'Môn mở rộng (Y3)',
+          icon: 'fa-code text-amber-400',
+          title: 'Môn Xây dựng Trang Web: HTML5, CSS3 & Tailwind CSS',
+          summary: 'Thư viện số cá nhân mở rộng cho môn Thiết kế Web: Cấu trúc thẻ ngữ nghĩa HTML5, Flexbox, Grid và Responsive Mobile.',
+          personalNote: 'Ghi chú cá nhân: Áp dụng trực tiếp kỹ thuật Tailwind CSS và Glassmorphism để xây dựng giao diện Assignment CNTT 4.0 này.',
+          link: 'https://developer.mozilla.org/vi/docs/Web/HTML',
+          linkText: 'Tài liệu chuẩn MDN Web Docs Tiếng Việt',
+          image: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80'
+        },
+        {
+          id: 'web2',
+          type: 'Môn mở rộng (Y3)',
+          icon: 'fa-js text-yellow-400',
+          title: 'Lập trình JavaScript DOM & LocalStorage',
+          summary: 'Xử lý sự kiện tương tác người dùng, thao tác DOM động và lưu trữ dữ liệu cục bộ trên trình duyệt.',
+          personalNote: 'Ghi chú cá nhân: Dùng LocalStorage giúp ứng dụng Quản lý ghi chú ở Phần 2 giữ lại dữ liệu kể cả khi tải lại trang.',
+          link: 'https://javascript.info/',
+          linkText: 'Học JavaScript hiện đại tại JavaScript.info',
+          image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?auto=format&fit=crop&w=800&q=80'
+        }
+      ],
+      softskill: [
+        {
+          id: 'ss1',
+          type: 'Môn mở rộng (Y3)',
+          icon: 'fa-people-group text-emerald-400',
+          title: 'Kỹ năng học tập & Phương pháp thuyết trình hiệu quả',
+          summary: 'Kỹ thuật ghi chép Cornell, sơ đồ tư duy Mindmap và nghệ thuật trình bày Slide ngắn gọn, súc tích trước hội đồng.',
+          personalNote: 'Ghi chú cá nhân: Chuẩn bị kỹ kịch bản demo 5 phút cho buổi bảo vệ Assignment CNTT 4.0.',
+          link: 'https://www.mindmeister.com/',
+          linkText: 'Công cụ vẽ sơ đồ tư duy MindMeister',
+          image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80'
+        }
+      ]
+    };
+
+    let currentSubject = 'cntt4';
+    let currentSourceIndex = 0;
+
+    function selectLibrarySubject(sub) {
+      currentSubject = sub;
+      currentSourceIndex = 0;
+      document.querySelectorAll('.lib-sub-btn').forEach(btn => {
+        btn.className = 'lib-sub-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-950/80 text-amber-200 border border-amber-400/30 hover:bg-amber-800/60 transition';
+      });
+      const activeBtn = document.getElementById('lib-btn-' + sub);
+      if (activeBtn) {
+        activeBtn.className = 'lib-sub-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-amber-950 shadow transition';
+      }
+      renderNotebookSources();
+    }
+
+    function renderNotebookSources() {
+      const list = libraryData[currentSubject] || [];
+      const container = document.getElementById('notebook-sources-list');
+      const badge = document.getElementById('source-count-badge');
+      badge.textContent = `${list.length} Tài liệu số`;
+
+      container.innerHTML = list.map((item, idx) => `
+        <button onclick="selectSource(${idx})" class="w-full text-left p-3 rounded-xl border transition flex items-start gap-2.5 ${idx === currentSourceIndex ? 'bg-amber-500/25 border-amber-400 text-amber-100' : 'bg-black/30 border-amber-400/15 text-amber-100/80 hover:bg-amber-900/40'}">
+          <i class="fa-solid ${item.icon} mt-1 text-sm shrink-0"></i>
+          <div class="min-w-0">
+            <div class="text-[10px] uppercase tracking-wider text-amber-300/80 font-semibold">${item.type}</div>
+            <div class="text-xs font-semibold truncate">${item.title}</div>
+          </div>
+        </button>
+      `).join('');
+
+      renderSourceViewer();
+    }
+
+    function selectSource(idx) {
+      currentSourceIndex = idx;
+      renderNotebookSources();
+    }
+
+    function renderSourceViewer() {
+      const item = (libraryData[currentSubject] || [])[currentSourceIndex];
+      if (!item) return;
+      const viewer = document.getElementById('source-viewer-card');
+      viewer.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-400/20 pb-3">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-semibold">${item.type}</span>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-amber-200 mt-1">${item.title}</h3>
+          </div>
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold text-xs shrink-0 transition inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở link tham chiếu
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <div class="md:col-span-5 rounded-xl overflow-hidden border border-amber-400/25 aspect-video bg-black/40">
+            <img src="${item.image}" alt="${item.title}" onerror="this.src='https://placehold.co/600x400/78350f/fef3c7?text=Tai+Lieu+CNTT+4.0'" class="w-full h-full object-cover" />
+          </div>
+          <div class="md:col-span-7 space-y-2.5">
+            <div>
+              <div class="text-xs font-bold text-amber-300 uppercase">Tóm tắt nội dung tài liệu (Y2a):</div>
+              <p class="text-xs sm:text-sm text-amber-100/90 mt-0.5 leading-relaxed">${item.summary}</p>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/30">
+              <div class="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square"></i> Ghi chú của bản thân sinh viên (Y2d):
+              </div>
+              <p class="text-xs text-emerald-100/90 mt-1 leading-relaxed">${item.personalNote}</p>
+            </div>
+            <div class="text-xs text-amber-300">
+              <i class="fa-solid fa-link mr-1"></i> Nguồn web (Y2c): <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-200">${item.linkText}</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function askNotebookAI(question) {
+      const chatBox = document.getElementById('notebook-chat-box');
+      chatBox.innerHTML += `
+        <div class="flex justify-end">
+          <div class="bg-amber-500 text-amber-950 font-medium rounded-xl px-3 py-2 max-w-[85%]">${question}</div>
+        </div>
+      `;
+
+      let reply = '';
+      const q = question.toLowerCase();
+      if (q.includes('8 bài') || q.includes('tóm tắt')) {
+        reply = '<strong>Tổng hợp 8 Slide CNTT 4.0:</strong><br>• <em>Slide 1-2:</em> Nền tảng CMCN 4.0 &amp; Trí tuệ nhân tạo (AI).<br>• <em>Slide 3-5:</em> Hạ tầng IoT, Cloud, Big Data (5V) &amp; An toàn Blockchain.<br>• <em>Slide 6-8:</em> Công cụ số (NotebookLM, AI Studio), Lộ trình nghề nghiệp IT và Đạo đức công dân số.';
+      } else if (q.includes('xu hướng') || q.includes('ai') || q.includes('iot')) {
+        reply = 'Theo <strong>Slide 2 &amp; Slide 3</strong>, xu hướng nổi bật hiện nay là <strong>Generative AI (AI tạo sinh)</strong> kết hợp với <strong>IoT &amp; Điện toán đám mây</strong>, giúp tự động hóa từ học tập cá nhân đến nông nghiệp thông minh tại Việt Nam.';
+      } else if (q.includes('nghề') || q.includes('chuyên ngành')) {
+        reply = 'Theo <strong>Slide 7</strong>, sinh viên CNTT có nhiều lựa chọn: Lập trình Web (Frontend/Backend), Mobile App, UI/UX Designer, Data Analyst và Kiểm thử phần mềm (QA/QC). Lớp <strong>ITI102-WD22301</strong> đang đi đúng hướng phát triển Web hiện đại!';
+      } else {
+        reply = `Dựa trên thư viện 8 bài học của <strong>Phó Minh Quốc Knul</strong>, vấn đề "${question}" liên quan mật thiết đến việc ứng dụng công cụ số (NotebookLM &amp; AI Studio) để tối ưu hóa việc tự học và quản lý tri thức cá nhân.`;
+      }
+
+      setTimeout(() => {
+        chatBox.innerHTML += `
+          <div class="flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-amber-500 text-amber-950 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">AI</span>
+            <div class="bg-amber-900/50 border border-amber-400/20 rounded-xl p-2.5 text-amber-100 leading-relaxed">${reply}</div>
+          </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 250);
+    }
+
+    function handleNotebookChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('notebook-chat-input');
+      const val = input.value.trim();
+      if (!val) return;
+      askNotebookAI(val);
+      input.value = '';
+    }
+
+    // ==========================================
+    // 2. DỮ LIỆU PHẦN 2: QUẢN LÝ GHI CHÚ AI (Y5 >= 10 GHI CHÚ, >= 5 NGÀY)
+    // ==========================================
+    const defaultNotes = [
+      { id: 1, title: 'Khởi tạo thư viện số trên Google NotebookLM', date: '2026-11-15', category: 'Thực hành NotebookLM', content: 'Tạo notebook mới cho môn CNTT 4.0, tải lên đầy đủ 8 slide bài giảng từ LMS FPT Polytechnic (Đáp ứng Y1).', done: true },
+      { id: 2, title: 'Ghi chú tổng hợp Slide 1 & Slide 2: CMCN 4.0 & AI', date: '2026-11-15', category: 'Học tập CNTT 4.0', content: 'Tóm tắt sự khác biệt giữa 4 cuộc cách mạng công nghiệp và cách ứng dụng AI tạo sinh hỗ trợ học tập.', done: true },
+      { id: 3, title: 'Bổ sung tài liệu hình ảnh, video & link web (Y2)', date: '2026-11-16', category: 'Thực hành NotebookLM', content: 'Thêm các liên kết chuẩn từ MDN, Wikipedia, YouTube về công nghệ 4.0 và nông nghiệp thông minh Việt Nam.', done: true },
+      { id: 4, title: 'Mở rộng thư viện cho môn Thiết kế Web (Y3)', date: '2026-11-16', category: 'Học tập CNTT 4.0', content: 'Tạo thêm thư viện số riêng cho môn HTML5/CSS3/JS để phục vụ việc lập trình giao diện web cá nhân.', done: true },
+      { id: 5, title: 'Vẽ phác thảo Wireframe ứng dụng trên Draw.io (Y4a)', date: '2026-11-17', category: 'Thiết kế & Code App', content: 'Thiết kế bố cục màn hình chính gồm thanh thống kê tiến độ, form thêm ghi chú nhanh và lưới hiển thị thẻ.', done: true },
+      { id: 6, title: 'Mô tả luồng vận hành chức năng CRUD & AI (Y4b, Y4c)', date: '2026-11-17', category: 'Thiết kế & Code App', content: 'Xây dựng sơ đồ luồng xử lý từ bước nhập dữ liệu -> lưu LocalStorage -> AI phân tích và tóm tắt.', done: true },
+      { id: 7, title: 'Xây dựng giao diện chủ đề Đồng lúa Việt Nam & Bác Hồ', date: '2026-11-18', category: 'Thiết kế & Code App', content: 'Chọn bảng màu vàng hoàng hôn đồng lúa kết hợp khung chân dung Chủ tịch Hồ Chí Minh trang trọng làm nền ứng dụng.', done: true },
+      { id: 8, title: 'Lập trình tính năng Thêm, Sửa, Xóa & Lọc theo ngày', date: '2026-11-18', category: 'Thiết kế & Code App', content: 'Hoàn thiện mã nguồn JavaScript cho phép quản lý ghi chú mượt mà, tìm kiếm từ khóa tức thì.', done: true },
+      { id: 9, title: 'Tích hợp trợ lý AI tóm tắt và gợi ý kế hoạch (Y6)', date: '2026-11-19', category: 'Thiết kế & Code App', content: 'Xây dựng mô-đun AI tự động tổng hợp nội dung các ghi chú và đề xuất lịch ôn tập bảo vệ Assignment.', done: true },
+      { id: 10, title: 'Ôn tập kiến thức Big Data 5V & An toàn thông tin', date: '2026-11-19', category: 'Học tập CNTT 4.0', content: 'Ghi nhớ 5 đặc trưng của Big Data (Volume, Velocity, Variety, Veracity, Value) để trả lời câu hỏi giảng viên.', done: false },
+      { id: 11, title: 'Viết báo cáo Word/PDF & Thiết kế Slide bảo vệ', date: '2026-11-20', category: 'Kế hoạch cá nhân', content: 'Chụp ảnh minh chứng quá trình thực hiện Y1-Y6, xuất báo cáo PDF và chuẩn bị slide thuyết trình ngắn gọn.', done: false },
+      { id: 12, title: 'Đóng gói tệp ZIP đúng cú pháp PK04952 nộp bài', date: '2026-11-20', category: 'Kế hoạch cá nhân', content: 'Kiểm tra lại toàn bộ file và nén thành PK04952-PhoMinhQuocKnul_CNTT4.0_Assignment.zip trước giờ bảo vệ.', done: false }
+    ];
+
+    let notes = [];
+
+    function loadNotes() {
+      try {
+        const saved = localStorage.getItem('pk04952_cntt4_notes');
+        if (saved) {
+          notes = JSON.parse(saved);
+        } else {
+          notes = [...defaultNotes];
+          saveNotes();
+        }
+      } catch (e) {
+        notes = [...defaultNotes];
+      }
+      updateDayFilterOptions();
+      renderNotes();
+    }
+
+    function saveNotes() {
+      try {
+        localStorage.setItem('pk04952_cntt4_notes', JSON.stringify(notes));
+      } catch (e) {}
+    }
+
+    function updateDayFilterOptions() {
+      const select = document.getElementById('note-filter-day');
+      const currentVal = select.value;
+      const uniqueDays = [...new Set(notes.map(n => n.date))].sort();
+      select.innerHTML = `<option value="ALL">Tất cả các ngày (${uniqueDays.length} ngày)</option>` +
+        uniqueDays.map(d => `<option value="${d}">Ngày ${formatDateVN(d)}</option>`).join('');
+      if (uniqueDays.includes(currentVal)) select.value = currentVal;
+    }
+
+    function formatDateVN(isoDate) {
+      if (!isoDate) return '';
+      const parts = isoDate.split('-');
+      return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : isoDate;
+    }
+
+    function renderNotes() {
+      const search = document.getElementById('note-search').value.toLowerCase().trim();
+      const dayFilter = document.getElementById('note-filter-day').value;
+      const grid = document.getElementById('notes-grid');
+
+      const filtered = notes.filter(n => {
+        const matchText = n.title.toLowerCase().includes(search) || n.content.toLowerCase().includes(search) || n.category.toLowerCase().includes(search);
+        const matchDay = dayFilter === 'ALL' || n.date === dayFilter;
+        return matchText && matchDay;
+      });
+
+      // Cập nhật thống kê Y5
+      const uniqueDaysCount = new Set(notes.map(n => n.date)).size;
+      const completedCount = notes.filter(n => n.done).length;
+      document.getElementById('stat-total-notes').textContent = notes.length;
+      document.getElementById('stat-total-days').textContent = `${uniqueDaysCount} ngày`;
+      document.getElementById('stat-completed-notes').textContent = `${completedCount}/${notes.length}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8 text-amber-200/70 text-sm bg-black/25 rounded-2xl border border-amber-400/15">Không tìm thấy ghi chú phù hợp. Hãy thử từ khóa khác hoặc thêm ghi chú mới!</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(n => `
+        <div class="rounded-2xl p-4 border transition flex flex-col justify-between gap-3 ${n.done ? 'bg-emerald-950/35 border-emerald-500/30' : 'bg-amber-950/80 border-amber-400/25'}">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/20">
+                <i class="fa-regular fa-calendar mr-1"></i>${formatDateVN(n.date)}
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-black/40 text-amber-200/80">${n.category}</span>
+            </div>
+            <h4 class="font-bold text-sm ${n.done ? 'line-through text-emerald-200/80' : 'text-amber-200'}">${n.title}</h4>
+            <p class="text-xs text-amber-100/85 leading-relaxed">${n.content}</p>
+          </div>
+
+          <div class="pt-2 border-t border-amber-400/15 flex items-center justify-between">
+            <button onclick="toggleNoteDone(${n.id})" class="text-xs font-semibold flex items-center gap-1.5 ${n.done ? 'text-emerald-400' : 'text-amber-300 hover:text-amber-200'}">
+              <i class="fa-solid ${n.done ? 'fa-circle-check' : 'fa-regular fa-circle'}"></i>
+              ${n.done ? 'Đã hoàn thành' : 'Đánh dấu xong'}
+            </button>
+            <button onclick="deleteNote(${n.id})" class="text-xs text-red-400 hover:text-red-300 px-2 py-1 rounded-lg hover:bg-red-500/10 transition" title="Xóa ghi chú">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAddNote(e) {
+      e.preventDefault();
+      const title = document.getElementById('note-title').value.trim();
+      const date = document.getElementById('note-date').value;
+      const category = document.getElementById('note-category').value;
+      const content = document.getElementById('note-content').value.trim();
+
+      if (!title || !date || !content) return;
+
+      notes.unshift({
+        id: Date.now(),
+        title,
+        date,
+        category,
+        content,
+        done: false
+      });
+
+      saveNotes();
+      updateDayFilterOptions();
+      renderNotes();
+      document.getElementById('note-title').value = '';
+      document.getElementById('note-content').value = '';
+      showToast('Đã thêm ghi chú cá nhân mới thành công!');
+    }
+
+    function toggleNoteDone(id) {
+      const target = notes.find(n => n.id === id);
+      if (target) {
+        target.done = !target.done;
+        saveNotes();
+        renderNotes();
+        showToast(target.done ? 'Đã đánh dấu hoàn thành ghi chú!' : 'Đã chuyển trạng thái đang thực hiện.');
+      }
+    }
+
+    function deleteNote(id) {
+      notes = notes.filter(n => n.id !== id);
+      saveNotes();
+      updateDayFilterOptions();
+      renderNotes();
+      showToast('Đã xóa ghi chú khỏi danh sách.');
+    }
+
+    function resetSampleNotes() {
+      notes = [...defaultNotes];
+      saveNotes();
+      updateDayFilterOptions();
+      renderNotes();
+      showToast('Đã khôi phục 12 ghi chú mẫu chuẩn Y5 (6 ngày)!');
+    }
+
+    function autoSuggestNoteWithAI() {
+      const suggestions = [
+        { title: 'Luyện tập thuyết trình Demo sản phẩm 5 phút', cat: 'Kế hoạch cá nhân', text: 'Chạy thử toàn bộ chức năng Thư viện số Phần 1 và Ứng dụng Ghi chú AI Phần 2 để đảm bảo mượt mà khi bảo vệ.' },
+        { title: 'Tìm hiểu thêm về Prompt Engineering trong Google AI Studio', cat: 'Học tập CNTT 4.0', text: 'Cách đặt câu lệnh rõ ràng, có ngữ cảnh giúp AI tóm tắt tài liệu học tập chính xác và ngắn gọn hơn.' }
+      ];
+      const pick = suggestions[Math.floor(Math.random() * suggestions.length)];
+      document.getElementById('note-title').value = pick.title;
+      document.getElementById('note-category').value = pick.cat;
+      document.getElementById('note-content').value = pick.text;
+      showToast('AI đã điền gợi ý ghi chú học tập!');
+    }
+
+    function runAINoteAction(type) {
+      const out = document.getElementById('ai-note-output');
+      out.classList.remove('hidden');
+      const total = notes.length;
+      const done = notes.filter(n => n.done).length;
+      const pending = notes.filter(n => !n.done);
+      const days = new Set(notes.map(n => n.date)).size;
+
+      if (type === 'summarize') {
+        out.innerHTML = `
+          <div class="font-bold text-purple-300 mb-1"><i class="fa-solid fa-sparkles mr-1"></i> Báo cáo Tóm Tắt Thông Minh từ AI:</div>
+          Sinh viên <strong>Phó Minh Quốc Knul (PK04952)</strong> đã ghi chép tổng cộng <strong>${total} ghi chú</strong> trải đều trên <strong>${days} ngày</strong> (vượt mức tối thiểu 10 ghi chú / 5 ngày của Y5). Tỷ lệ hoàn thành đạt <strong>${Math.round((done/total)*100)}%</strong> (${done}/${total} việc). Các nội dung tập trung mạch lạc từ khâu xây dựng thư viện NotebookLM, vẽ phác thảo Draw.io đến hoàn thiện ứng dụng Web tích hợp AI.
+        `;
+      } else if (type === 'plan') {
+        out.innerHTML = `
+          <div class="font-bold text-amber-300 mb-1"><i class="fa-solid fa-calendar-check mr-1"></i> Kế Hoạch Bảo Vệ Assignment Đề Xuất Bởi AI:</div>
+          • <strong>Bước 1 (1 phút):</strong> Giới thiệu thông tin SV (PK04952 - Lớp ITI102-WD22301) và ý tưởng giao diện Đồng lúa Việt Nam kết hợp chân dung Bác Hồ.<br>
+          • <strong>Bước 2 (2 phút):</strong> Demo Phần 1 trên Google NotebookLM với đủ 8 Slide bài học, link web và ghi chú mở rộng.<br>
+          • <strong>Bước 3 (2 phút):</strong> Trình bày bản vẽ Wireframe (Y4) và thao tác trực tiếp thêm/lọc/tóm tắt AI trên Ứng dụng Ghi chú (Y5-Y6).
+        `;
+      } else if (type === 'priority') {
+        const pendingList = pending.length > 0
+          ? pending.map(p => `<li>• <strong>${p.title}</strong> (${formatDateVN(p.date)})</li>`).join('')
+          : '<li>• Tuyệt vời! Bạn đã hoàn thành 100% các ghi chú công việc.</li>';
+        out.innerHTML = `
+          <div class="font-bold text-emerald-300 mb-1"><i class="fa-solid fa-bolt mr-1"></i> Danh Sách Việc Cần Ưu Tiên Hoàn Thiện Ngay (${pending.length} việc):</div>
+          <ul class="space-y-1">${pendingList}</ul>
+        `;
+      }
+    }
+
+    // ==========================================
+    // 3. ĐIỀU HƯỚNG TAB, MODAL & TƯƠNG TÁC UI
+    // ==========================================
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('text-amber-100/85', 'hover:bg-amber-400/15');
+      });
+
+      const activeBtn = document.getElementById('nav-' + tabName);
+      activeBtn.classList.add('tab-active');
+      activeBtn.classList.remove('text-amber-100/85', 'hover:bg-amber-400/15');
+    }
+
+    function switchPart2Mode(mode) {
+      const appDiv = document.getElementById('p2-mode-app');
+      const wireDiv = document.getElementById('p2-mode-wireframe');
+      const btnApp = document.getElementById('p2-btn-app');
+      const btnWire = document.getElementById('p2-btn-wireframe');
+
+      if (mode === 'app') {
+        appDiv.classList.remove('hidden');
+        wireDiv.classList.add('hidden');
+        btnApp.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 text-amber-950 shadow transition';
+        btnWire.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-950/80 text-amber-200 border border-amber-400/30 hover:bg-amber-800/60 transition';
+      } else {
+        appDiv.classList.add('hidden');
+        wireDiv.classList.remove('hidden');
+        btnWire.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 text-amber-950 shadow transition';
+        btnApp.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-950/80 text-amber-200 border border-amber-400/30 hover:bg-amber-800/60 transition';
+      }
+    }
+
+    // Thay đổi sắc thái ánh nắng chiều trên đồng lúa
+    let sunsetTone = 0;
+    function toggleSunsetAtmosphere() {
+      const bg = document.querySelector('.rice-field-bg');
+      sunsetTone = (sunsetTone + 1) % 3;
+      if (sunsetTone === 0) {
+        bg.style.filter = 'none';
+        showToast('Sắc chiều: Hoàng hôn vàng rực truyền thống');
+      } else if (sunsetTone === 1) {
+        bg.style.filter = 'sepia(0.25) saturate(1.35) brightness(1.05)';
+        showToast('Sắc chiều: Nắng nghệ ấm áp mùa gặt');
+      } else {
+        bg.style.filter = 'hue-rotate(-10deg) saturate(1.2) brightness(0.95)';
+        showToast('Sắc chiều: Chạng vạng tím hồng đồng quê');
+      }
+    }
+
+    function openImageModal(title, desc, imgSrc) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-desc').textContent = desc;
+      document.getElementById('modal-img').src = imgSrc;
+      document.getElementById('image-modal').classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+      document.getElementById('image-modal').classList.add('hidden');
+    }
+
+    function copyZipName() {
+      const text = 'PK04952-PhoMinhQuocKnul_CNTT4.0_Assignment.zip';
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast('Đã sao chép tên file ZIP chuẩn: ' + text);
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // Khởi tạo ứng dụng khi tải trang
+    window.addEventListener('DOMContentLoaded', () => {
+      renderNotebookSources();
+      loadNotes();
+    });
+  </script>
+</body>
+</html>
